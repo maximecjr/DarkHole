@@ -35,8 +35,6 @@ ABlackHolePower0Projectile::ABlackHolePower0Projectile()
 	MeshComp->SetVisibility(false);
 
 
-	// Die after 3 seconds by default
-	InitialLifeSpan = 3.0f;
 }
 
 void ABlackHolePower0Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -45,7 +43,11 @@ void ABlackHolePower0Projectile::OnHit(UPrimitiveComponent* HitComp, AActor* Oth
 	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) && OtherComp->IsSimulatingPhysics())
 	{
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
-
-		Destroy();
 	}
+}
+void ABlackHolePower0Projectile::BeginPlay()
+{
+	Super::BeginPlay();
+	InitialLifeSpan = DistToExplode / ProjectileMovement->InitialSpeed;
+	SetLifeSpan(InitialLifeSpan);
 }

@@ -30,7 +30,7 @@ class ABlackHolePower0Projectile : public AActor
 
 public:
 	ABlackHolePower0Projectile();
-
+	virtual void BeginPlay() override;
 	/** called when projectile hits something */
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
@@ -39,5 +39,10 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+public:
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	float DistToExplode;
+
+	float InitialLifeSpan;
 };
 
